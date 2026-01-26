@@ -4,28 +4,39 @@
     box-sizing: border-box;
 }
 
+.montserrat-font {
+  font-family: "Montserrat", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+}
+
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: 'ui-Apple Chancery', sans-serif;
     background: linear-gradient(135deg, #ff9100 0%, #7700ff 100%);
-    min-height: 100vh;
-    padding: 20px;
     display: flex;
     flex-direction: column;
+    height: 100vh;
     align-items: center;
+    min-height: 100vh;
+    flex-direction: column;
 }
 
 /* ===== HEADER ===== */
 header {
     background: white;
     width: 100%;
+    height: 5dvh;
     max-width: 1200px;
     padding: 30px 40px;
     border-radius: 15px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.853);
     display: flex;
     align-items: center;
-    gap: 20px;
-    margin-bottom: 30px;
+    gap: 10px;
+    margin-top: 25px;
+    margin-inline-end: 10px;
+    margin-inline-start: 10px;
     animation: slideDown 0.6s ease-out;
 }
 
@@ -42,8 +53,7 @@ header {
 
 header img {
     max-width: 150px;
-    height: auto;
-    background: linear-gradient(135deg, #ffffff 0%, #f97800 100%);
+    height: fit-content;
     padding: 15px;
     border-radius: 10px;
 }
@@ -53,13 +63,21 @@ header span {
 }
 
 header h2 {
-    font-size: 2em;
+    font-size: 1.6em;
     color: #000000;
     font-weight: 600;
     letter-spacing: 1px;
 }
 
 /* ===== FORM CONTAINER ===== */
+#Form-Section{
+    display: flex;
+    justify-content: center; /* eixo horizontal */
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+
+}
 #form {
     background: white;
     width: 100%;
@@ -87,7 +105,7 @@ header h2 {
     margin-bottom: 30px;
     text-align: center;
     padding-bottom: 15px;
-    border-bottom: 3px solid #667eea;
+    border-bottom: 3px solid #ff9500;
 }
 
 /* ===== SECTION ===== */
