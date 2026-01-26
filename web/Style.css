@@ -1,0 +1,324 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #ff9100 0%, #7700ff 100%);
+    min-height: 100vh;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* ===== HEADER ===== */
+header {
+    background: white;
+    width: 100%;
+    max-width: 1200px;
+    padding: 30px 40px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 30px;
+    animation: slideDown 0.6s ease-out;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+header img {
+    max-width: 150px;
+    height: auto;
+    background: linear-gradient(135deg, #ffffff 0%, #f97800 100%);
+    padding: 15px;
+    border-radius: 10px;
+}
+
+header span {
+    flex: 1;
+}
+
+header h2 {
+    font-size: 2em;
+    color: #000000;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+
+/* ===== FORM CONTAINER ===== */
+#form {
+    background: white;
+    width: 100%;
+    max-width: 600px;
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    animation: fadeIn 0.6s ease-out 0.2s both;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+#form h2 {
+    font-size: 1.8em;
+    color: #333;
+    margin-bottom: 30px;
+    text-align: center;
+    padding-bottom: 15px;
+    border-bottom: 3px solid #667eea;
+}
+
+/* ===== SECTION ===== */
+section {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* ===== INPUT TEXT ===== */
+#NomeDoArquivo {
+    width: 100%;
+    padding: 15px 20px;
+    font-size: 1em;
+    border: 2px solid #e0e0e0;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+    outline: none;
+    font-family: inherit;
+}
+
+#NomeDoArquivo:focus {
+    border-color: #667eea;
+    box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+    transform: translateY(-2px);
+}
+
+#NomeDoArquivo::placeholder {
+    color: #999;
+    font-style: italic;
+}
+
+/* ===== DROPDOWN (para quando for gerado) ===== */
+select {
+    width: 100%;
+    padding: 15px 20px;
+    font-size: 1em;
+    border: 2px solid #e0e0e0;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+    outline: none;
+    cursor: pointer;
+    background-color: white;
+    font-family: inherit;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23667eea' d='M10.293 3.293L6 7.586 1.707 3.293A1 1 0 00.293 4.707l5 5a1 1 0 001.414 0l5-5a1 1 0 10-1.414-1.414z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 15px center;
+    padding-right: 45px;
+}
+
+select:focus {
+    border-color: #667eea;
+    box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+}
+
+select:hover {
+    border-color: #764ba2;
+}
+
+/* ===== BUTTON ===== */
+#Enviar {
+    width: 100%;
+    padding: 15px 30px;
+    font-size: 1.1em;
+    font-weight: 600;
+    color: rgb(255, 255, 255);
+    background: rgb(0, 0, 0);
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(170, 0, 255, 0.4);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+#Enviar::before {
+    content: '📊 Gerar Relatório';
+}
+
+#Enviar:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(153, 0, 255, 0.6);
+}
+
+#Enviar:active {
+    transform: translateY(-1px);
+    box-shadow: 0 3px 10px rgba(102, 126, 234, 0.4);
+}
+
+#Enviar:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+/* ===== LABELS (caso adicione) ===== */
+label {
+    font-size: 0.95em;
+    font-weight: 600;
+    color: #555;
+    margin-bottom: 8px;
+    display: block;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+    body {
+        padding: 15px;
+    }
+
+    header {
+        flex-direction: column;
+        text-align: center;
+        padding: 25px;
+    }
+
+    header h2 {
+        font-size: 1.5em;
+    }
+
+    #form {
+        padding: 25px;
+    }
+
+    #form h2 {
+        font-size: 1.5em;
+    }
+
+    #NomeDoArquivo,
+    select,
+    #Enviar {
+        padding: 12px 15px;
+        font-size: 0.95em;
+    }
+}
+
+@media (max-width: 480px) {
+    header h2 {
+        font-size: 1.3em;
+    }
+
+    #form h2 {
+        font-size: 1.3em;
+    }
+
+    header img {
+        max-width: 120px;
+        padding: 10px;
+    }
+}
+
+/* ===== LOADING STATE ===== */
+.loading {
+    pointer-events: none;
+    opacity: 0.6;
+    position: relative;
+}
+
+.loading::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 20px;
+    height: 20px;
+    margin: -10px 0 0 -10px;
+    border: 3px solid #fff;
+    border-radius: 50%;
+    border-top-color: transparent;
+    animation: spinner 0.8s linear infinite;
+}
+
+@keyframes spinner {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* ===== MENSAGENS DE ERRO/SUCESSO ===== */
+.message {
+    padding: 15px 20px;
+    border-radius: 10px;
+    margin-top: 20px;
+    font-weight: 500;
+    animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.message.success {
+    background: #d4edda;
+    color: #155724;
+    border: 2px solid #c3e6cb;
+}
+
+.message.error {
+    background: #f8d7da;
+    color: #721c24;
+    border: 2px solid #f5c6cb;
+}
+
+/* ===== ESTILO PARA PLACEHOLDER DO DROPDOWN ===== */
+.dropdown-container {
+    position: relative;
+    width: 100%;
+}
+
+.dropdown-container::before {
+    content: 'Selecione uma opção';
+    position: absolute;
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #999;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.dropdown-container select:invalid::before {
+    opacity: 1;
+}
