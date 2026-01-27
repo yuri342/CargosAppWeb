@@ -17,6 +17,7 @@ async function render(filter = '') {
 
         if (!filtro || nomeNormalizado.includes(filtro)) {
             const opt = document.createElement("option");
+            opt.id
             opt.value = nome;
             opt.textContent = nome;
             app.appendChild(opt);
