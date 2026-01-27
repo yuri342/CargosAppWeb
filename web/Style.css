@@ -18,7 +18,7 @@ body {
     flex-direction: column;
     height: 100vh;
     align-items: center;
-    min-height: 100vh;
+    min-height: 100dvh;
     flex-direction: column;
 }
 
@@ -26,9 +26,10 @@ body {
 header {
     background: white;
     width: 100%;
+    max-width: 1200px;
     height: 5dvh;
     max-width: 1200px;
-    padding: 30px 40px;
+    padding: clamp(15px, 4vw, 30px) clamp(20px, 5vw, 40px);
     border-radius: 15px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.853);
     display: flex;
@@ -52,10 +53,12 @@ header {
 }
 
 header img {
-    max-width: 150px;
-    height: fit-content;
-    padding: 15px;
+    width: clamp(90px, 20vw, 150px);
+    height: auto;
+    max-width: 100%;
+    padding: clamp(8px, 2vw, 15px);
     border-radius: 10px;
+    object-fit: contain;
 }
 
 header span {
@@ -63,7 +66,7 @@ header span {
 }
 
 header h2 {
-    font-size: 1.6em;
+    font-size: clamp(1.2rem, 3vw, 1.6rem);
     color: #000000;
     font-weight: 600;
     letter-spacing: 1px;
@@ -100,7 +103,7 @@ header h2 {
 }
 
 #form h2 {
-    font-size: 1.8em;
+    font-size: clamp(1.3rem, 3vw, 1.8rem);
     color: #333;
     margin-bottom: 30px;
     text-align: center;
@@ -340,3 +343,26 @@ label {
 .dropdown-container select:invalid::before {
     opacity: 1;
 }
+
+
+@media (max-width: 480px) {
+    header {
+        margin-top: 15px;
+        border-radius: 12px;
+    }
+
+    header img {
+        max-width: 110px;
+    }
+
+    #Enviar {
+        font-size: 1em;
+        letter-spacing: 0.5px;
+    }
+}
+
+header,
+#form {
+    max-width: 92vw;
+}
+
