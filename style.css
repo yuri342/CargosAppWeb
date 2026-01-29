@@ -217,15 +217,14 @@ label {
 }
 
 /* ===== RESPONSIVE ===== */
-@media (max-width: 768px) {
+@media (max-width: 770px) {
     body {
         padding: 15px;
     }
 
     header {
-        flex-direction: column;
-        text-align: center;
-        padding: 25px;
+        flex-direction: row;
+        padding: 5%;
     }
 
     header h2 {
@@ -248,9 +247,13 @@ label {
     }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 500px) {
+    header{
+        margin: 2%;
+    }
+
     header h2 {
-        font-size: 1.3em;
+        font-size: 1em;
     }
 
     #form h2 {
@@ -258,8 +261,9 @@ label {
     }
 
     header img {
-        max-width: 120px;
-        padding: 10px;
+        max-width: 500px;
+        height: fit-content;
+        padding: 5px;
     }
 }
 
