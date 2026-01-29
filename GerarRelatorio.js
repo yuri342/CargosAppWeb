@@ -1,4 +1,10 @@
 
+//Não usado por enquanto
+// const btprint = document.getElementById("Btprint");
+// btprint.addEventListener("click", () => {
+//     btprint.style
+//     window.print();
+// });
 
 
 const dados = JSON.parse(localStorage.getItem("cargoSelecionado"));
