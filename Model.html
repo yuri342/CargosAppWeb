@@ -1,139 +1,125 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
   <meta charset="UTF-8">
   <title>Descrição de Cargo</title>
-    <style>
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-      }
-  
-      body {
-        font-family: "Inter", "Segoe UI", Arial, sans-serif;
-        font-size: 12.5px;
-        color: #1f2933;
-        background: #ffffff;
-        padding: 56px;
-      }
-  
-      /* TÍTULO PRINCIPAL */
-      h1 {
-        font-size: 26px;
-        font-weight: 600;
-        margin-bottom: 40px;
-        color: #0f172a;
-        border-left: 6px solid #ff8400;
-        padding-left: 14px;
-      }
-  
-      /* CARD DE SEÇÃO */
-      .section {
-        margin-bottom: 26px;
-        border-radius: 8px;
-        background: #f8fafc;
-        padding: 20px;
-        page-break-inside: avoid;
-        box-shadow: 0 1px 3px rgba(0,0,0,0.08);
-      }
-  
-      .section-title {
-        font-size: 13px;
-        font-weight: 600;
-        margin-bottom: 10px;
-        color: #6300a5;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-      }
-  
-      .section-content {
-        line-height: 1.7;
-        font-size: 12.5px;
-        color: #121212;
-        white-space: pre-line;
-      }
-  
-      /* LISTAS NATURAIS (caso venha quebrado por ponto) */
-      .section-content p {
-        margin-bottom: 8px;
-      }
-  
-      /* DIVISOR SUAVE */
-      .divider {
-        height: 1px;
-        background: linear-gradient(to right, #e5e7eb, transparent);
-        margin: 30px 0;
-      }
-  
-      /* RODAPÉ */
-      footer {
-        position: fixed;
-        bottom: 18px;
-        left: 56px;
-        right: 56px;
-        font-size: 10px;
-        color: #006aff;
-        text-align: center;
-      }
-  
-      /* PÁGINA A4 */
-      @page {
-        size: A4;
-        margin: 25mm;
-      }
-    </style>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: "Inter", "Segoe UI", Arial, sans-serif;
+      font-size: 12.5px;
+      color: #1f2933;
+      background: #ffffff;
+      padding: 56px;
+    }
+
+    /* TÍTULO PRINCIPAL */
+    h1 {
+      font-size: 20px;
+      font-weight: 600;
+      margin-bottom: 40px;
+      color: #0f172a;
+      border-left: 6px solid #ff8400;
+      padding-left: 14px;
+    }
+
+    /* CARD DE SEÇÃO */
+    .section {
+      margin-bottom: 26px;
+      border-radius: 8px;
+      background: #f8fafc;
+      padding: 20px;
+      page-break-inside: avoid;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+    }
+
+    .section-title {
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 10px;
+      color: #6300a5;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .section-content {
+      line-height: 1.5;
+      font-size: 12.5px;
+      text-align: justify;
+      color: #121212;
+      white-space: pre-line;
+    }
+
+    /* LISTAS NATURAIS (caso venha quebrado por ponto) */
+    .section-content p {
+      margin-bottom: 8px;
+    }
+
+    /* DIVISOR SUAVE */
+    .divider {
+      height: 1px;
+      background: linear-gradient(to right, #e5e7eb, transparent);
+      margin: 30px 0;
+    }
+
+    /* RODAPÉ */
+    footer {
+      position: fixed;
+      bottom: 18px;
+      left: 56px;
+      right: 56px;
+      font-size: 10px;
+      color: #006aff;
+      text-align: center;
+    }
+
+    /* PÁGINA A4 */
+    @page {
+      size: A4;
+      margin: 25mm;
+    }
+  </style>
 </head>
 
 <body>
 
   <!-- TÍTULO / NOME DO CARGO -->
-  <h1>TECNICO SERVICOS</h1>
+  <h1 id="TituloRelatorio"></h1>
 
   <!-- DESCRIÇÃO SUMÁRIA -->
   <div class="section">
     <div class="section-title">Descrição Sumária</div>
-    <div class="section-content">
-      Executar atividades de cunho técnico na sua área de atuação, realizando análises, controles e pareceres técnicos.
-      Atuar na implantação e atualização dos processos relacionados a sua área de atuação, propondo inovações e melhorias.
-    </div>
+    <div class="section-content" id="Sumario"></div>
   </div>
 
   <!-- RESPONSABILIDADES -->
   <div class="section">
     <div class="section-title">Responsabilidades do Cargo</div>
-    <div class="section-content">
-      Realizar atendimentos de baixa complexidade em elevadores, equipamentos de acessibilidade, escadas rolantes e
-      equipamentos de outras marcas para manutenção preventiva e troca de peças.
-      Cumprir a rota estipulada, buscando ganhos de produtividade através do melhor roteiro, conforme alinhamentos com a liderança.
-      Trabalhar com segurança em primeiro lugar, cumprindo os procedimentos padrões operacionais da empresa e as normas de segurança,
-      objetivando a qualidade dos serviços.
-      Zelar pelo uso e conservação dos recursos disponíveis (máquinas, equipamentos, ferramentas, uniformes, EPIs, EPCs, etc.),
-      manter o seu local de trabalho limpo e organizado, promovendo a boa imagem da empresa.
-    </div>
+    <div class="section-content" id="Responsabilidades"></div>
   </div>
 
-  <!-- COMPETÊNCIAS TÉCNICAS -->
-  <div class="section">
-    <div class="section-title">Competências Técnicas</div>
-    <div class="section-content">
-      Conhecimento Básico em Manutenção Preventiva.
-      Procedimentos e Processos de Segurança do Trabalho para Técnicos.
-      Conhecimento em Técnica de Vendas.
+    <!-- COMPETÊNCIAS TÉCNICAS -->
+    <div class="section">
+      <div class="section-title">Competências Técnicas</div>
+      <div class="section-content" id="competencias_tecnicas"></div>
     </div>
-  </div>
 
-  <!-- FORMAÇÃO / IDIOMA -->
-  <div class="section">
-    <div class="section-title">Formação / Idioma</div>
-    <div class="section-content">
-      Ensino Médio Completo / Curso Técnico Completo / Inglês Intermediário e Espanhol Intermediário.
+    <!-- FORMAÇÃO / IDIOMA -->
+    <div class="section">
+      <div class="section-title">Formação / Idioma</div>
+      <div class="section-content" id="idioma_formacao"></div>
     </div>
-  </div>
 
-  <footer>
-    Documento gerado automaticamente — uso interno
-  </footer>
-
+    <footer>
+      Documento gerado automaticamente — uso interno
+    </footer>
+    <script type="module" src="GerarRelatorio.js"></script>
 </body>
+
 </html>
