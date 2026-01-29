@@ -79,6 +79,38 @@
       text-align: center;
     }
 
+    #Btprint {
+      position: fixed;
+      top: 24px;
+      right: 24px;
+
+      padding: 10px 18px;
+      font-size: 12.5px;
+      font-weight: 600;
+      letter-spacing: 0.3px;
+
+      color: #ffffff;
+      background: linear-gradient(135deg, #ff6600, #6900cb);
+      border: none;
+      border-radius: 6px;
+
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+
+      transition: transform 0.15s ease, box-shadow 0.15s ease, opacity 0.15s;
+    }
+
+    #Btprint:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.2);
+      opacity: 0.95;
+    }
+
+    #Btprint:active {
+      transform: translateY(0);
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+    }
+
     /* PÁGINA A4 */
     @page {
       size: A4;
@@ -104,22 +136,23 @@
     <div class="section-content" id="Responsabilidades"></div>
   </div>
 
-    <!-- COMPETÊNCIAS TÉCNICAS -->
-    <div class="section">
-      <div class="section-title">Competências Técnicas</div>
-      <div class="section-content" id="competencias_tecnicas"></div>
-    </div>
+  <!-- COMPETÊNCIAS TÉCNICAS -->
+  <div class="section">
+    <div class="section-title">Competências Técnicas</div>
+    <div class="section-content" id="competencias_tecnicas"></div>
+  </div>
 
-    <!-- FORMAÇÃO / IDIOMA -->
-    <div class="section">
-      <div class="section-title">Formação / Idioma</div>
-      <div class="section-content" id="idioma_formacao"></div>
-    </div>
+  <!-- FORMAÇÃO / IDIOMA -->
+  <div class="section">
+    <div class="section-title">Formação / Idioma</div>
+    <div class="section-content" id="idioma_formacao"></div>
+  </div>
 
-    <footer>
-      Documento gerado automaticamente — uso interno
-    </footer>
-    <script type="module" src="GerarRelatorio.js"></script>
+  <footer>
+    <button id="Btprint" onclick="window.print()">Imprimir</button>
+    Documento gerado automaticamente — uso interno
+  </footer>
+  <script type="module" src="GerarRelatorio.js"></script>
 </body>
 
 </html>
