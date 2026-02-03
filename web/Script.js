@@ -1,4 +1,32 @@
-import {gerarExcel} from './GerarRelatorio.js';
+export async function gerarExcel(dados) {
+  const linhas = dados.map(dado => ({
+    Cargo: dado.name,
+    Descrição: dado.items?.[0]?.description ?? "",
+    Responsabilidades: dado.items?.[1]?.description ?? "",
+    Competencias_Técnicas: dado.items?.[2]?.description ?? "",
+    Formação_Idioma: dado.items?.[3]?.description ?? ""
+  }));
+
+  const ws = XLSX.utils.json_to_sheet(linhas);
+
+  const headerStyle = {
+    fill: { fgColor: { rgb: "000000" } },
+    font: { color: { rgb: "FFFFFF" }, bold: true },
+    alignment: { horizontal: "center", vertical: "center" }
+  };
+
+  const range = XLSX.utils.decode_range(ws["!ref"]);
+
+  for (let C = range.s.c; C <= range.e.c; ++C) {
+    const cell = ws[XLSX.utils.encode_cell({ r: 0, c: C })];
+    if (cell) cell.s = headerStyle;
+  }
+
+  const wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, "Cargos");
+
+  XLSX.writeFile(wb, "cargos.xlsx");
+}
 
 async function carregarJson() {
     const response = await fetch('./json/CargosDesc.json');
@@ -28,6 +56,8 @@ async function render(filter = '') {
 
     console.log("RenderOK");
 }
+
+render();
 
 async function CarregarObj(key) {
     const response = await fetch('./json/CargosDesc.json');
