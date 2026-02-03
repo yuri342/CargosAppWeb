@@ -127,6 +127,17 @@
       margin: 25mm;
     }
 
+    .allContent {
+      page-break-after: always;
+      break-after: page;
+    }
+
+    .section,
+    header {
+      page-break-inside: avoid;
+      break-inside: avoid;
+    }
+
     header {
       display: flex;
       align-items: center;
@@ -153,41 +164,44 @@
 </head>
 
 <body>
+  <div class="allContent" id="allContent">
+    <!-- TÍTULO / NOME DO CARGO -->
+    <header>
+      <h1 id="TituloRelatorio"></h1>
+      <img src="media\tke_logo_rgb_standard_gradient.svg" alt="">
+    </header>
 
-  <!-- TÍTULO / NOME DO CARGO -->
-  <header>
-    <h1 id="TituloRelatorio"></h1>
-    <img src="media\tke_logo_rgb_standard_gradient.svg" alt="">
-  </header>
+    <!-- DESCRIÇÃO SUMÁRIA -->
+    <div class="section">
+      <div class="section-title">Descrição Sumária</div>
+      <div class="section-content" id="Sumario"></div>
+    </div>
 
-  <!-- DESCRIÇÃO SUMÁRIA -->
-  <div class="section">
-    <div class="section-title">Descrição Sumária</div>
-    <div class="section-content" id="Sumario"></div>
-  </div>
+    <!-- RESPONSABILIDADES -->
+    <div class="section">
+      <div class="section-title">Responsabilidades do Cargo</div>
+      <div class="section-content" id="Responsabilidades"></div>
+    </div>
 
-  <!-- RESPONSABILIDADES -->
-  <div class="section">
-    <div class="section-title">Responsabilidades do Cargo</div>
-    <div class="section-content" id="Responsabilidades"></div>
-  </div>
+    <!-- COMPETÊNCIAS TÉCNICAS -->
+    <div class="section">
+      <div class="section-title">Competências Técnicas</div>
+      <div class="section-content" id="competencias_tecnicas"></div>
+    </div>
 
-  <!-- COMPETÊNCIAS TÉCNICAS -->
-  <div class="section">
-    <div class="section-title">Competências Técnicas</div>
-    <div class="section-content" id="competencias_tecnicas"></div>
-  </div>
-
-  <!-- FORMAÇÃO / IDIOMA -->
-  <div class="section">
-    <div class="section-title">Formação / Idioma</div>
-    <div class="section-content" id="idioma_formacao"></div>
+    <!-- FORMAÇÃO / IDIOMA -->
+    <div class="section">
+      <div class="section-title">Formação / Idioma</div>
+      <div class="section-content" id="idioma_formacao"></div>
+    </div>
   </div>
 
   <footer>
-    <button id="Btprint" onclick="window.print()">Imprimir</button>
     Documento gerado automaticamente — Uso interno — Uso Operacional - Não Compartilhar com Externos
   </footer>
+
+  <button id="Btprint" onclick="window.print()">Imprimir</button>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
   <script type="module" src="GerarRelatorio.js"></script>
 </body>
 

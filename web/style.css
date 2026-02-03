@@ -169,6 +169,14 @@ select:hover {
     border-color: #764ba2;
 }
 
+#BtBox{
+    width: 100%;
+    height: fit-content;
+    display: flex;
+    flex-direction: row;
+    gap: 3%;
+}
+
 /* ===== BUTTON ===== */
 #Enviar {
     width: 100%;
@@ -201,6 +209,119 @@ select:hover {
 }
 
 #Enviar:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+/* ===== BUTTON ===== */
+#GerarEmExcel {
+    width: 100%;
+    padding: 15px 30px;
+    font-size: 1.1em;
+    font-weight: 600;
+    color: rgb(255, 255, 255);
+    background: rgb(0, 0, 0);
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(170, 0, 255, 0.4);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+#GerarEmExcel::before {
+    content: '📊 Gerar em Excel';
+}
+
+#GerarEmExcel:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(153, 0, 255, 0.6);
+}
+
+#GerarEmExcel:active {
+    transform: translateY(-1px);
+    box-shadow: 0 3px 10px rgba(102, 126, 234, 0.4);
+}
+
+#GerarEmExcel:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+#GerarEmExcel {
+    width: 100%;
+    padding: 15px 30px;
+    font-size: 1.1em;
+    font-weight: 600;
+    color: rgb(255, 255, 255);
+    background: rgb(0, 0, 0);
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(170, 0, 255, 0.4);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+#GerarEmExcel::before {
+    content: '🔄️ Gerar em Excel';
+}
+
+#GerarEmExcel:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(153, 0, 255, 0.6);
+}
+
+#GerarEmExcel:active {
+    transform: translateY(-1px);
+    box-shadow: 0 3px 10px rgba(102, 126, 234, 0.4);
+}
+
+#GerarEmExcel:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+/* ===== BUTTON ===== */
+#GerarTodos {
+    width: 100%;
+    padding: 15px 30px;
+    font-size: 1.1em;
+    font-weight: 600;
+    color: rgb(255, 255, 255);
+    background: rgb(0, 0, 0);
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(170, 0, 255, 0.4);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+#GerarTodos::before {
+    content: '📥 Gerar Todos';
+}
+
+#GerarTodos:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(153, 0, 255, 0.6);
+}
+
+#GerarTodos:active {
+    transform: translateY(-1px);
+    box-shadow: 0 3px 10px rgba(102, 126, 234, 0.4);
+}
+
+#GerarTodos:disabled {
     background: #ccc;
     cursor: not-allowed;
     transform: none;

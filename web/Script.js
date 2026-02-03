@@ -37,7 +37,6 @@ async function CarregarObj(key) {
 
 }
 
-
 const input = document.getElementById("NomeDoArquivo");
 function atualizarLista() {
     const skey = input.value.trim();
@@ -62,9 +61,29 @@ async function buscarCargoPorNome(nome) {
 const inputselect = document.getElementById("dataOpts")
 
 const inputBt = document.getElementById("Enviar")
+const inputBtTodos = document.getElementById("GerarTodos")
+const inputBtExcel = document.getElementById("GerarEmExcel")
+
+inputBtExcel.addEventListener("click", async e =>{
+    const response = await fetch('./json/CargosDesc.json');
+    const data = await response.json();
+    localStorage.setItem("cargoSelecionado", JSON.stringify(data))
+    localStorage.setItem("buttonSelected", 3)
+    window.location.href = "Model.html"
+})
+
+inputBtTodos.addEventListener("click", async e =>{
+    const response = await fetch('./json/CargosDesc.json');
+    const data = await response.json();
+    localStorage.setItem("cargoSelecionado", JSON.stringify(data))
+    localStorage.setItem("buttonSelected", 2)
+    window.location.href = "Model.html"
+})
+
 inputBt.addEventListener("click", async e =>{
     const dados = await buscarCargoPorNome(inputselect.value)
     localStorage.setItem("cargoSelecionado", JSON.stringify(dados));
+    localStorage.setItem("buttonSelected", 1)
     window.location.href = "Model.html";
 })
 
