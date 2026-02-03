@@ -1,3 +1,5 @@
+import {gerarExcel} from './GerarRelatorio.js';
+
 async function carregarJson() {
     const response = await fetch('./json/CargosDesc.json');
     const data = await response.json();
@@ -67,9 +69,7 @@ const inputBtExcel = document.getElementById("GerarEmExcel")
 inputBtExcel.addEventListener("click", async e =>{
     const response = await fetch('./json/CargosDesc.json');
     const data = await response.json();
-    localStorage.setItem("cargoSelecionado", JSON.stringify(data))
-    localStorage.setItem("buttonSelected", 3)
-    window.location.href = "Model.html"
+    await gerarExcel(data)
 })
 
 inputBtTodos.addEventListener("click", async e =>{
