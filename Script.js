@@ -1,3 +1,6 @@
+// ======================
+// GERAR EXCEL
+// ======================
 export async function gerarExcel(dados) {
   const linhas = dados.map(dado => ({
     Cargo: dado.name,
@@ -24,96 +27,123 @@ export async function gerarExcel(dados) {
 
   const wb = XLSX.utils.book_new();
   XLSX.utils.book_append_sheet(wb, ws, "Cargos");
-
   XLSX.writeFile(wb, "cargos.xlsx");
 }
 
+// ======================
+// CARREGAR NOMES
+// ======================
 async function carregarJson() {
-    const response = await fetch('./json/CargosDesc.json');
-    const data = await response.json();
-    return data.map(item => item.name);
+  const response = await fetch('./json/CargosDesc.json');
+  const data = await response.json();
+  return data.map(item => item.name);
 }
 
+// ======================   //
+// RENDER SELECT           //
+// ====================== //
 async function render(filter = '') {
-    const cargosNomes = await carregarJson();
-    const app = document.getElementById("dataOpts");
+  const cargosNomes = await carregarJson();
+  const select = document.getElementById("dataOpts");
 
-    app.innerHTML = ''; // limpa antes de renderizar
+  select.innerHTML = '';
 
-    const filtro = filter.trim().toLowerCase();
+  const filtro = filter.trim().toLowerCase();
 
-    cargosNomes.forEach(nome => {
-        const nomeNormalizado = nome.toLowerCase();
-
-        if (!filtro || nomeNormalizado.includes(filtro)) {
-            const opt = document.createElement("option");
-            opt.id = "OptData"
-            opt.value = nome;
-            opt.textContent = nome;
-            app.appendChild(opt);
-        }
-    });
-
-    console.log("RenderOK");
+  cargosNomes.forEach(nome => {
+    if (!filtro || nome.toLowerCase() === filtro) {
+      const opt = document.createElement("option");
+      opt.value = nome;
+      opt.textContent = nome;
+      select.appendChild(opt);
+    }
+  });
 }
 
 render();
 
-async function CarregarObj(key) {
-    const response = await fetch('./json/CargosDesc.json');
-    const data = await response.json();
-    const resultado = data.find(item => item.name === key);
+// ======================
+// INPUT FILTRO
+// ======================
+const inputFiltro = document.getElementById("NomeDoArquivo");
 
-    console.log(resultado)
-
-
-}
-
-const input = document.getElementById("NomeDoArquivo");
 function atualizarLista() {
-    const skey = input.value.trim();
-    console.log("Valor Pesquisado:", skey);
-
-    if (skey === '') {
-        render();
-    } else {
-        render(skey);
-    }
+  const valor = inputFiltro.value.trim();
+  render(valor);
 }
-input.addEventListener("input", atualizarLista);
+
+inputFiltro.addEventListener("input", atualizarLista);
 document.addEventListener("DOMContentLoaded", atualizarLista);
 
-async function buscarCargoPorNome(nome) {
-    const response = await fetch('./json/CargosDesc.json');
-    const dados = await response.json();
-
-    return dados.find(cargo => cargo.name === nome) || null;
+// ======================
+// UTIL — PEGAR MULTI SELEÇÃO
+// ======================
+function getSelecionados(select) {
+  return Array.from(select.selectedOptions)
+    .map(opt => opt.value);
 }
 
-const inputselect = document.getElementById("dataOpts")
+// ======================
+// BUSCAR CARGOS POR NOME (ARRAY)
+// ======================
+async function buscarCargosPorNome(nomes) {
+  const response = await fetch('./json/CargosDesc.json');
+  const dados = await response.json();
+  return dados.filter(cargo => nomes.some(nome => nome === cargo.name));
+}
 
-const inputBt = document.getElementById("Enviar")
-const inputBtTodos = document.getElementById("GerarTodos")
-const inputBtExcel = document.getElementById("GerarEmExcel")
+// ======================
+// ELEMENTOS
+// ======================
+const selectCargos = document.getElementById("dataOpts");
+const btEnviar = document.getElementById("Enviar");
+const btTodos = document.getElementById("GerarTodos");
+const btExcel = document.getElementById("GerarEmExcel");
 
-inputBtExcel.addEventListener("click", async e =>{
-    const response = await fetch('./json/CargosDesc.json');
-    const data = await response.json();
-    await gerarExcel(data)
-})
+// ======================
+// GERAR EXCEL
+// ======================
+btExcel.addEventListener("click", async () => {
+  const selecionados = getSelecionados(selectCargos);
 
-inputBtTodos.addEventListener("click", async e =>{
-    const response = await fetch('./json/CargosDesc.json');
-    const data = await response.json();
-    localStorage.setItem("cargoSelecionado", JSON.stringify(data))
-    localStorage.setItem("buttonSelected", 2)
-    window.location.href = "Model.html"
-})
+  const response = await fetch('./json/CargosDesc.json');
+  const data = await response.json();
 
-inputBt.addEventListener("click", async e =>{
-    const dados = await buscarCargoPorNome(inputselect.value)
-    localStorage.setItem("cargoSelecionado", JSON.stringify(dados));
-    localStorage.setItem("buttonSelected", 1)
-    window.location.href = "Model.html";
-})
+  const dados = selecionados.length
+    ? data.filter(cargo => selecionados.includes(cargo.name))
+    : data;
 
+  await gerarExcel(dados);
+});
+
+// ======================
+// GERAR TODOS
+// ======================
+btTodos.addEventListener("click", async () => {
+  const response = await fetch('./json/CargosDesc.json');
+  const data = await response.json();
+
+  localStorage.setItem("cargoSelecionado", JSON.stringify(data));
+  localStorage.setItem("buttonSelected", 2);
+
+  window.location.href = "Model.html";
+});
+
+// ======================
+// ENVIAR SELECIONADOS
+// ======================
+btEnviar.addEventListener("click", async () => {
+  const selecionados = getSelecionados(selectCargos);
+
+  if (selecionados.length === 0) {
+    alert("Selecione ao menos um cargo");
+    return; 
+  }
+
+  const dados = await buscarCargosPorNome(selecionados);
+
+  localStorage.setItem("cargoSelecionado", JSON.stringify(dados));
+  localStorage.setItem("buttonSelected", 1);
+
+  window.location.href = "Model.html";
+});

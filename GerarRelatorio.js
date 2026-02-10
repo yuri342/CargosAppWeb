@@ -1,65 +1,66 @@
-
 const btprintPDF = document.getElementById("baixarPdf");
 
-const opt = localStorage.getItem("buttonSelected")
-const dados = JSON.parse(localStorage.getItem("cargoSelecionado"));
+const opt = localStorage.getItem("buttonSelected");
+const dadosRaw = JSON.parse(localStorage.getItem("cargoSelecionado"));
 
+// ======================
+// NORMALIZA DADOS
+// ======================
+// garante sempre array
+const dados = Array.isArray(dadosRaw) ? dadosRaw : [dadosRaw];
 
+// ======================
+// PREENCHER RELATÓRIO (1 CARGO)
+// ======================
+function preencherRelatorio(dado) {
+  const sumario = document.getElementById("Sumario");
+  const responsabilidades = document.getElementById("Responsabilidades");
+  const competencias_tecnicas = document.getElementById("competencias_tecnicas");
+  const idioma_formacao = document.getElementById("idioma_formacao");
+  const tituloRelatorio = document.getElementById("TituloRelatorio");
 
-async function prencherRelatorio(dados) {
-        //Sumario
-        const sumario = document.getElementById("Sumario")
-        //Responsabilidades
-        const Responsabilidades = document.getElementById("Responsabilidades")
-        //competencias_tecnicas
-        const competencias_tecnicas = document.getElementById("competencias_tecnicas")
-        //idioma_formacao
-        const idioma_formacao = document.getElementById("idioma_formacao")
-        //titRel
-        const TituloRelatorio = document.getElementById("TituloRelatorio")
+  tituloRelatorio.textContent = dado.name ?? "";
+  sumario.textContent = dado.items?.[0]?.description ?? "";
+  responsabilidades.textContent = dado.items?.[1]?.description ?? "";
+  competencias_tecnicas.textContent = dado.items?.[2]?.description ?? "";
+  idioma_formacao.textContent = dado.items?.[3]?.description ?? "";
 
-        let sumarioText = dados.items[0].description
-        let ResponsabilidadesText = dados.items[1].description
-        let competencias_tecnicasText = dados.items[2].description
-        let idioma_formacaoText = dados.items[3].description
-        let tituloText = dados.name
-    
-        TituloRelatorio.textContent = tituloText
-        sumario.textContent = sumarioText
-        Responsabilidades.textContent = ResponsabilidadesText
-        competencias_tecnicas.textContent = competencias_tecnicasText
-        idioma_formacao.textContent = idioma_formacaoText
-        
-        console.log(dados.items[0].title)
 }
 
-async function gerarTodos(dados) {
-    const original = document.getElementById("allContent");
-    console.log(dados)
-    dados.forEach(dado => {
-        const clone = original.cloneNode(true);
-        original.remove();
+// ======================
+// GERAR RELATÓRIO PARA VÁRIOS
+// ======================
+function gerarTodos(dados) {
+  const original = document.getElementById("allContent");
+  original.remove();
 
-        clone.querySelector("#TituloRelatorio").textContent = dado.name;
-        clone.querySelector("#Sumario").textContent = dado.items?.[0]?.description ?? "";
-        clone.querySelector("#Responsabilidades").textContent = dado.items?.[1]?.description ?? "";
-        clone.querySelector("#competencias_tecnicas").textContent = dado.items?.[2]?.description ?? "";
-        clone.querySelector("#idioma_formacao").textContent = dado.items?.[3]?.description ?? "";
+  dados.forEach(dado => {
+    const clone = original.cloneNode(true);
 
-        document.body.appendChild(clone);
-    });
+    clone.querySelector("#TituloRelatorio").textContent = dado.name ?? "";
+    clone.querySelector("#Sumario").textContent = dado.items?.[0]?.description ?? "";
+    clone.querySelector("#Responsabilidades").textContent = dado.items?.[1]?.description ?? "";
+    clone.querySelector("#competencias_tecnicas").textContent = dado.items?.[2]?.description ?? "";
+    clone.querySelector("#idioma_formacao").textContent = dado.items?.[3]?.description ?? "";
+
+    document.body.appendChild(clone);
+  });
 }
 
-
-console.log(opt)
+// ======================
+// CONTROLE DE FLUXO
+// ======================
 switch (opt) {
-    case "1":
-        await prencherRelatorio(dados)
-        break;
-    case "2":
-        await gerarTodos(dados)
-        break;
-    default:
-        console.log("opção invalida")
-        break;
+  case "1":
+    // vários selecionados
+    gerarTodos(dados);
+    break;
+
+  case "2":
+    // todos
+    gerarTodos(dados);
+    break;
+
+  default:
+    console.error("Opção inválida:", opt);
 }
