@@ -34,7 +34,8 @@ def obterDetalhesCompletos(job_position_id, workstation_id="undefined"):
         "sec-fetch-dest": "empty",
         "sec-fetch-mode": "cors",
         "sec-fetch-site": "same-site",
-        "Authorization": "Bearer aOCXkwp4JMszJZcYHSu8dzsZk5yuUYo1"
+        "keep-alive": "true",
+        "Authorization": "Bearer 68c881pSKJhuYzjwbRFgHUmzMSj6myk9"
     }
     
     # Cookies
@@ -69,6 +70,26 @@ def extrairApenasIds(caminho_json):
     
     return ids
 
+def remover_repetidos_por_name(lista):
+    vistos = set()
+    resultado = []
+
+    for item in lista:
+        if not item:
+            continue
+
+        name = item.get("name")
+        if not name:
+            continue
+
+        chave = name.strip().upper()
+
+        if chave not in vistos:
+            vistos.add(chave)
+            resultado.append(item)
+
+    return resultado
+
 
 def SalvarJson(pathOut, Values):
     with open(pathOut, 'w', encoding='utf-8') as arquivoResultado:
@@ -85,6 +106,9 @@ if __name__ == "__main__":
         dados = obterDetalhesCompletos(id)
         descDeCargos.append(dados)
 
-SalvarJson("SalvosTesteDesc.json",descDeCargos)
+descDeCargosUnicos = remover_repetidos_por_name(descDeCargos)
+SalvarJson("SalvosTesteDesc.json", descDeCargosUnicos)
+
+print("Finalizado e salvo em SalvosTesteDesc.json")
 
     
