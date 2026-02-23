@@ -2,67 +2,59 @@ import requests
 import pathlib
 import pandas as pd
 import json
+from concurrent.futures import ThreadPoolExecutor, as_completed
 
-def gerarArrayComNomes(PathExcel):
-    path_file = pathlib.Path(PathExcel)
-    df = pd.read_excel(path_file)
-    nomes = df['TITRED'].tolist()
-    return nomes
+# ---------- CONFIG ----------
+URL = "https://hcm-api.senior.com.br/frontend-api/career-path/job-position-career/1B4E037293114AFFB64D34BAD3BF6C1A/search"
+TOKEN = "UeXktV0ck2DPMapLTy90D0NBBPAqoAkd"
+MAX_WORKERS = 10  # ajuste conforme sua internet/API limite
+# ----------------------------
 
+def gerarArrayComNomes(path_excel):
+    df = pd.read_excel(path_excel, usecols=["TITRED"])
+    return df["TITRED"].dropna().astype(str).tolist()
 
-def pequisarCargos(skey):
+def criar_sessao():
     session = requests.Session()
-
-    url = "https://hcm-api.senior.com.br/frontend-api/career-path/job-position-career/1B4E037293114AFFB64D34BAD3BF6C1A/search"
-
-    params = {
-        "q": skey
-    }
-
-    headers = {
+    session.headers.update({
         "accept": "application/json, text/plain, */*",
-        "accept-language": "pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7",
-        "cache-control": "no-cache",
-        "pragma": "no-cache",
         "user-role-active": "5DA297944E48475FBAFD66762B5B9ED4",
         "user-role-list": "5DA297944E48475FBAFD66762B5B9ED4",
         "zone-offset": "-180",
-        "Authorization": "Bearer aOCXkwp4JMszJZcYHSu8dzsZk5yuUYo1"
-    }
-
+        "Authorization": f"Bearer {TOKEN}"
+    })
     session.cookies.update({
         "activeEmployeeId": "1B4E037293114AFFB64D34BAD3BF6C1A",
         "com.senior.domain": ".senior.com.br",
     })
+    return session
 
-    response = session.get(url, headers=headers, params=params)
+def pesquisar_cargo(session, nome):
+    try:
+        response = session.get(URL, params={"q": nome}, timeout=10)
+        if response.status_code == 200:
+            return {"cargo_pesquisado": nome, "resultado": response.json()}
+    except requests.RequestException:
+        pass
+    return None
+
+def salvar_json(path_out, dados):
+    with open(path_out, "w", encoding="utf-8") as f:
+        json.dump(dados, f, ensure_ascii=False, indent=4)
+
+# ---------- EXECUÇÃO ----------
+nomes = gerarArrayComNomes(pathlib.Path("Cargos2.xlsx"))
+
+session = criar_sessao()
+resultados = []
+
+with ThreadPoolExecutor(max_workers=MAX_WORKERS) as executor:
+    futures = {executor.submit(pesquisar_cargo, session, nome): nome for nome in nomes}
     
-    # Verifica se a requisição foi bem-sucedida
-    if response.status_code == 200:
-        return response.json()  # Retorna o JSON, não o objeto response
-    else:
-        print(f"Erro ao buscar '{skey}': Status {response.status_code}")
-        return None
+    for future in as_completed(futures):
+        resultado = future.result()
+        if resultado:
+            resultados.append(resultado)
 
-
-def SalvarJson(pathOut, Values):
-    with open(pathOut, 'w', encoding='utf-8') as arquivoResultado:
-        json.dump(Values, arquivoResultado, ensure_ascii=False, indent=4)
-
-
-# Execução
-nomes = gerarArrayComNomes(pathlib.Path('Cargos.xlsx'))
-arraySalvos = []
-
-for nome in nomes:
-    print(f"Buscando: {nome}")
-    resultado = pequisarCargos(nome)
-    if resultado:  # Só adiciona se não for None
-        arraySalvos.append({
-            "cargo_pesquisado": nome,
-            "resultado": resultado
-        })
-
-# Salvar o resultado
-SalvarJson('resultados_cargos.json', arraySalvos)
-print(f"Total de cargos salvos: {len(arraySalvos)}")
+salvar_json("resultados_cargos2.json", resultados)
+print(f"Total de cargos salvos: {len(resultados)}")
