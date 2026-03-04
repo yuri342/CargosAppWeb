@@ -1,4 +1,31 @@
 // ======================
+// CONFIG / CACHE
+// ======================
+let cargosCache = null;
+
+// ======================
+// NORMALIZAR TEXTO
+// ======================
+function normalizarTexto(texto) {
+  return texto
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "") // remove acentos
+    .toLowerCase()
+    .trim();
+}
+
+// ======================
+// CARREGAR JSON (CACHE)
+// ======================
+async function carregarJson() {
+  if (cargosCache) return cargosCache;
+
+  const response = await fetch('./json/CargosDesc.json');
+  cargosCache = await response.json();
+  return cargosCache;
+}
+
+// ======================
 // GERAR EXCEL
 // ======================
 export async function gerarExcel(dados) {
@@ -31,65 +58,64 @@ export async function gerarExcel(dados) {
 }
 
 // ======================
-// CARREGAR NOMES
+// RENDER SELECT (BUSCA INTELIGENTE)
 // ======================
-async function carregarJson() {
-  const response = await fetch('./json/CargosDesc.json');
-  const data = await response.json();
-  return data.map(item => item.name);
-}
-
-// ======================   //
-// RENDER SELECT           //
-// ====================== //
 async function render(filter = '') {
-  const cargosNomes = await carregarJson();
+  const dados = await carregarJson();
   const select = document.getElementById("dataOpts");
 
   select.innerHTML = '';
 
-  const filtro = filter.trim().toLowerCase();
+  const filtroNormalizado = normalizarTexto(filter);
 
-  cargosNomes.forEach(nome => {
-    if (!filtro || nome.toLowerCase() === filtro) {
+  dados.forEach(({ name }) => {
+    const nomeNormalizado = normalizarTexto(name);
+
+    if (!filtroNormalizado || nomeNormalizado.includes(filtroNormalizado)) {
       const opt = document.createElement("option");
-      opt.value = nome;
-      opt.textContent = nome;
+      opt.value = name;
+      opt.textContent = name;
       select.appendChild(opt);
     }
   });
 }
 
-render();
+// ======================
+// DEBOUNCE (PERFORMANCE)
+// ======================
+function debounce(fn, delay = 300) {
+  let timer;
+  return (...args) => {
+    clearTimeout(timer);
+    timer = setTimeout(() => fn(...args), delay);
+  };
+}
 
 // ======================
 // INPUT FILTRO
 // ======================
 const inputFiltro = document.getElementById("NomeDoArquivo");
 
-function atualizarLista() {
-  const valor = inputFiltro.value.trim();
-  render(valor);
-}
+const atualizarLista = debounce(() => {
+  render(inputFiltro.value);
+}, 300);
 
 inputFiltro.addEventListener("input", atualizarLista);
-document.addEventListener("DOMContentLoaded", atualizarLista);
+document.addEventListener("DOMContentLoaded", () => render());
 
 // ======================
 // UTIL — PEGAR MULTI SELEÇÃO
 // ======================
 function getSelecionados(select) {
-  return Array.from(select.selectedOptions)
-    .map(opt => opt.value);
+  return Array.from(select.selectedOptions).map(opt => opt.value);
 }
 
 // ======================
-// BUSCAR CARGOS POR NOME (ARRAY)
+// BUSCAR CARGOS POR NOME
 // ======================
 async function buscarCargosPorNome(nomes) {
-  const response = await fetch('./json/CargosDesc.json');
-  const dados = await response.json();
-  return dados.filter(cargo => nomes.some(nome => nome === cargo.name));
+  const dados = await carregarJson();
+  return dados.filter(cargo => nomes.includes(cargo.name));
 }
 
 // ======================
@@ -105,9 +131,7 @@ const btExcel = document.getElementById("GerarEmExcel");
 // ======================
 btExcel.addEventListener("click", async () => {
   const selecionados = getSelecionados(selectCargos);
-
-  const response = await fetch('./json/CargosDesc.json');
-  const data = await response.json();
+  const data = await carregarJson();
 
   const dados = selecionados.length
     ? data.filter(cargo => selecionados.includes(cargo.name))
@@ -120,8 +144,7 @@ btExcel.addEventListener("click", async () => {
 // GERAR TODOS
 // ======================
 btTodos.addEventListener("click", async () => {
-  const response = await fetch('./json/CargosDesc.json');
-  const data = await response.json();
+  const data = await carregarJson();
 
   localStorage.setItem("cargoSelecionado", JSON.stringify(data));
   localStorage.setItem("buttonSelected", 2);
@@ -137,7 +160,7 @@ btEnviar.addEventListener("click", async () => {
 
   if (selecionados.length === 0) {
     alert("Selecione ao menos um cargo");
-    return; 
+    return;
   }
 
   const dados = await buscarCargosPorNome(selecionados);
